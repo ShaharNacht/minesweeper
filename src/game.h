@@ -2,8 +2,14 @@
 
 #include "include_sdl2.h"
 
+#include "board.h"
+
 typedef struct Game
 {
+	// read-only
+	Board board;
+	
+	// private
 	SDL_Window *window;
 } Game;
 

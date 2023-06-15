@@ -3,6 +3,7 @@
 #include "include_sdl2.h"
 
 #include "consts.h"
+#include "board.h"
 
 #include "game.h"
 
@@ -17,10 +18,14 @@ void game_new( Game *self, int board_cols, int board_rows )
 	SDL_Init(SDL_INIT_VIDEO);
 	
 	self->window = SDL_CreateWindow( "Minesweeper", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0 );
+	
+	board_new( &self->board, board_cols, board_rows );
 }
 
 void game_destroy( Game *self )
 {
+	board_destroy(&self->board);
+	
 	SDL_DestroyWindow(self->window);
 	self->window = NULL;
 	

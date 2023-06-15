@@ -1,9 +1,10 @@
+#include "consts.h"
 #include "game.h"
 
 int main()
 {
 	Game game;
-	game_new( &game, 5, 7 );
+	game_new( &game, BOARD_COLS, BOARD_ROWS );
 	
 	game_main_loop(&game);
 	
