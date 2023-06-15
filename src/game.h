@@ -3,6 +3,7 @@
 #include "include_sdl2.h"
 
 #include "board.h"
+#include "graphics.h"
 
 typedef struct Game
 {
@@ -10,7 +11,9 @@ typedef struct Game
 	Board board;
 	
 	// private
+	Graphics graphics;
 	SDL_Window *window;
+	SDL_Renderer *renderer;
 } Game;
 
 void game_new( Game *self, int board_cols, int board_rows );

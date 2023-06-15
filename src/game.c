@@ -1,9 +1,11 @@
+#include <stddef.h>
 #include <stdbool.h>
 
 #include "include_sdl2.h"
 
 #include "consts.h"
 #include "board.h"
+#include "graphics.h"
 
 #include "game.h"
 
@@ -18,13 +20,19 @@ void game_new( Game *self, int board_cols, int board_rows )
 	SDL_Init(SDL_INIT_VIDEO);
 	
 	self->window = SDL_CreateWindow( "Minesweeper", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0 );
+	self->renderer = SDL_CreateRenderer( self->window, -1, 0 );
 	
 	board_new( &self->board, board_cols, board_rows );
+	graphics_new( &self->graphics, WINDOW_WIDTH, WINDOW_HEIGHT );
 }
 
 void game_destroy( Game *self )
 {
+	graphics_destroy(&self->graphics);
 	board_destroy(&self->board);
+	
+	SDL_DestroyRenderer(self->renderer);
+	self->renderer = NULL;
 	
 	SDL_DestroyWindow(self->window);
 	self->window = NULL;
@@ -78,5 +86,5 @@ static bool update( Game *self )
 
 static void draw( const Game *self )
 {
-	
+	graphics_draw( &self->graphics, self->renderer, &self->board );
 }
