@@ -1,4 +1,6 @@
 .vscode/
 
+wasm/
+
 minesweeper.exe
 minesweeper_dbg.exe

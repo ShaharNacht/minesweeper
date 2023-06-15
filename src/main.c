@@ -1,8 +1,13 @@
-#include <stdio.h>
+#include "game.h"
 
 int main()
 {
-	printf("Hello World!\n");
+	Game game;
+	game_new( &game, 5, 7 );
+	
+	game_main_loop(&game);
+	
+	game_destroy(&game);
 	
 	return 0;
 }
