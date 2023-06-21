@@ -1,5 +1,5 @@
-#include <stddef.h>
-#include <stdbool.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "include_sdl2.h"
 
@@ -22,6 +22,8 @@ void game_new( Game *self, int board_cols, int board_rows )
 	self->window = SDL_CreateWindow( "Minesweeper", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0 );
 	self->renderer = SDL_CreateRenderer( self->window, -1, 0 );
 	
+	srand( time(nullptr) );
+	
 	board_new( &self->board, board_cols, board_rows );
 	graphics_new( &self->graphics, WINDOW_WIDTH, WINDOW_HEIGHT );
 }
@@ -32,10 +34,10 @@ void game_destroy( Game *self )
 	board_destroy(&self->board);
 	
 	SDL_DestroyRenderer(self->renderer);
-	self->renderer = NULL;
+	self->renderer = nullptr;
 	
 	SDL_DestroyWindow(self->window);
-	self->window = NULL;
+	self->window = nullptr;
 	
 	SDL_Quit();
 }

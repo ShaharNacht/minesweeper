@@ -1,7 +1,7 @@
 name := minesweeper
 src := src/*.c
 
-flags := -std=gnu2x -Wall -Wextra -lSDL2
+flags := -std=c2x -Wall -Wextra -lSDL2
 debug_flags := -ggdb3 -Og -D_FORTIFY_SOURCE=3 -fanalyzer
 release_flags := -flto -O3 -mwindows
 
@@ -20,4 +20,4 @@ analyze:
 
 .PHONY: res
 res:
-	windres res/res.rc -o res/res2.o
+	windres res/res.rc -o res/res.o
