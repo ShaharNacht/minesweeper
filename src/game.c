@@ -18,6 +18,7 @@ void game_new( Game *self, int board_cols, int board_rows )
 	SDL_SetMainReady();
 	SDL_SetHint( SDL_HINT_WINDOWS_DPI_AWARENESS, "permonitorv2" );
 	SDL_Init(SDL_INIT_VIDEO);
+	IMG_Init(IMG_INIT_PNG);
 	
 	self->window = SDL_CreateWindow( "Minesweeper", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0 );
 	self->renderer = SDL_CreateRenderer( self->window, -1, 0 );
@@ -25,7 +26,7 @@ void game_new( Game *self, int board_cols, int board_rows )
 	srand( time(nullptr) );
 	
 	board_new( &self->board, board_cols, board_rows );
-	graphics_new( &self->graphics, WINDOW_WIDTH, WINDOW_HEIGHT );
+	graphics_new( &self->graphics, self->renderer, WINDOW_WIDTH, WINDOW_HEIGHT );
 }
 
 void game_destroy( Game *self )
@@ -39,6 +40,7 @@ void game_destroy( Game *self )
 	SDL_DestroyWindow(self->window);
 	self->window = nullptr;
 	
+	IMG_Quit();
 	SDL_Quit();
 }
 

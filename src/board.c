@@ -26,3 +26,8 @@ void board_destroy( Board *self )
 	free(self->cells);
 	self->cells = nullptr;
 }
+
+Cell *board_get_cell( const Board *self, int x, int y )
+{
+	return &self->cells[ y * self->cols + x ];
+}

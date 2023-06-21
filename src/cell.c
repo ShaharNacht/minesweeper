@@ -13,3 +13,8 @@ void cell_destroy( [[maybe_unused]] Cell *self )
 	// Intentional no-op, so that this function can already be called wherever necessary,
 	// in case code will be added to it in the future.
 }
+
+void cell_set_mine( Cell *self, bool is_mine )
+{
+	self->is_mine = is_mine;
+}

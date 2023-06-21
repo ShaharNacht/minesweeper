@@ -11,22 +11,28 @@ static void set_color( SDL_Renderer *renderer, const uint8_t *rgb );
 static void draw_background( const Graphics *self, SDL_Renderer *renderer, int cols, int rows );
 static void draw_board( const Graphics *self, SDL_Renderer *renderer, const Board *board );
 
-void graphics_new( Graphics *self, int window_width, int window_height )
+void graphics_new( Graphics *self, SDL_Renderer *renderer, int window_width, int window_height )
 {
 	self->window_width = window_width;
 	self->window_height = window_height;
+	
+	self->cell_texture = IMG_LoadTexture( renderer, GFX_CELL_TEXTURE_PATH );
+	self->mine_texture = IMG_LoadTexture( renderer, GFX_MINE_TEXTURE_PATH );
 }
 
-void graphics_destroy( [[maybe_unused]] Graphics *self )
+void graphics_destroy( Graphics *self )
 {
-	// Intentional no-op, so that this function can already be called wherever necessary,
-	// in case code will be added to it in the future.
+	SDL_DestroyTexture(self->cell_texture);
+	self->cell_texture = nullptr;
+	
+	SDL_DestroyTexture(self->mine_texture);
+	self->mine_texture = nullptr;
 }
 
 void graphics_draw( const Graphics *self, SDL_Renderer *renderer, const Board *board )
 {
 	draw_background( self, renderer, board->cols, board->rows );
-	// draw_board( self, renderer, board );
+	draw_board( self, renderer, board );
 	
 	SDL_RenderPresent(renderer);
 }
@@ -60,7 +66,36 @@ static void draw_background( const Graphics *self, SDL_Renderer *renderer, int c
 	}
 }
 
-// static void draw_board( const Graphics *self, SDL_Renderer *renderer, const Board *board )
-// {
-	
-// }
+static void draw_board( const Graphics *self, SDL_Renderer *renderer, const Board *board )
+{
+	for ( int y = 0; y < board->rows; y++ )
+	{
+		for ( int x = 0; x < board->cols; x++ )
+		{
+			Cell *cell = board_get_cell( board, x, y );
+			bool draw_cell = false;
+			SDL_Texture *texture = nullptr;
+			
+			if (!cell->is_revealed)
+			{
+				draw_cell = true;
+				texture = self->cell_texture;
+			}
+			else if (cell->is_mine)
+			{
+				draw_cell = true;
+				texture = self->mine_texture;
+			}
+			
+			if (draw_cell)
+			{
+				SDL_RenderCopy(
+					renderer,
+					texture,
+					nullptr,
+					&(SDL_Rect) { x * self->window_width / board->cols, y * self->window_height / board->rows, self->window_width / board->cols, self->window_height / board->rows }
+				);
+			}
+		}
+	}
+}

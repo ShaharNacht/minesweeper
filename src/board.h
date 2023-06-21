@@ -12,3 +12,5 @@ typedef struct Board
 
 void board_new( Board *self, int cols, int rows );
 void board_destroy( Board *self );
+
+Cell *board_get_cell( const Board *self, int x, int y );
