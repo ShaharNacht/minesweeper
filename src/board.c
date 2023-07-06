@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include "cell.h"
+#include "point.h"
 
 #include "board.h"
 
@@ -27,7 +28,7 @@ void board_destroy( Board *self )
 	self->cells = nullptr;
 }
 
-Cell *board_get_cell( const Board *self, int x, int y )
+Cell *board_get_cell( const Board *self, BoardPoint position )
 {
-	return &self->cells[ y * self->cols + x ];
+	return &self->cells[ position.y * self->cols + position.x ];
 }

@@ -6,9 +6,11 @@
 
 typedef struct Graphics
 {
-	// private
+	// read-only
 	int window_width;
 	int window_height;
+	
+	// private
 	SDL_Texture *cell_texture;
 	SDL_Texture *mine_texture;
 } Graphics;

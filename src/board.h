@@ -1,6 +1,9 @@
 #pragma once
 
+typedef struct BoardPoint BoardPoint; // Fixes cyclic dependency
+
 #include "cell.h"
+#include "point.h"
 
 typedef struct Board
 {
@@ -13,4 +16,4 @@ typedef struct Board
 void board_init( Board *self, int cols, int rows );
 void board_destroy( Board *self );
 
-Cell *board_get_cell( const Board *self, int x, int y );
+Cell *board_get_cell( const Board *self, BoardPoint position );
