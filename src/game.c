@@ -13,7 +13,7 @@ static bool handle_events( Game *self );
 static bool update( Game *self );
 static void draw( const Game *self );
 
-void game_new( Game *self, int board_cols, int board_rows )
+void game_init( Game *self, int board_cols, int board_rows )
 {
 	SDL_SetMainReady();
 	SDL_SetHint( SDL_HINT_WINDOWS_DPI_AWARENESS, "permonitorv2" );
@@ -25,8 +25,8 @@ void game_new( Game *self, int board_cols, int board_rows )
 	
 	srand( time(nullptr) );
 	
-	board_new( &self->board, board_cols, board_rows );
-	graphics_new( &self->graphics, self->renderer, WINDOW_WIDTH, WINDOW_HEIGHT );
+	board_init( &self->board, board_cols, board_rows );
+	graphics_init( &self->graphics, self->renderer, WINDOW_WIDTH, WINDOW_HEIGHT );
 }
 
 void game_destroy( Game *self )

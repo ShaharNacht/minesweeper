@@ -11,7 +11,7 @@ static void set_color( SDL_Renderer *renderer, const uint8_t *rgb );
 static void draw_background( const Graphics *self, SDL_Renderer *renderer, int cols, int rows );
 static void draw_board( const Graphics *self, SDL_Renderer *renderer, const Board *board );
 
-void graphics_new( Graphics *self, SDL_Renderer *renderer, int window_width, int window_height )
+void graphics_init( Graphics *self, SDL_Renderer *renderer, int window_width, int window_height )
 {
 	self->window_width = window_width;
 	self->window_height = window_height;

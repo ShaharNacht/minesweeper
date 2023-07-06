@@ -2,10 +2,10 @@
 
 #include "cell.h"
 
-void cell_new( Cell *self )
+void cell_init( Cell *self )
 {
-	self->is_revealed = ( rand() % 2 ) == 1;
-	self->is_mine = ( rand() % 2 ) == 1;
+	self->is_revealed = ( rand() % 2 ) != 0;
+	self->is_mine = ( rand() % 2 ) != 0;
 }
 
 void cell_destroy( [[maybe_unused]] Cell *self )

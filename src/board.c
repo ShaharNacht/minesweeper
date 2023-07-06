@@ -4,7 +4,7 @@
 
 #include "board.h"
 
-void board_new( Board *self, int cols, int rows )
+void board_init( Board *self, int cols, int rows )
 {
 	self->cols = cols;
 	self->rows = rows;
@@ -12,7 +12,7 @@ void board_new( Board *self, int cols, int rows )
 	self->cells = malloc( sizeof(Cell) * self->cols * self->rows );
 	for ( int i = 0; i < self->cols * self->rows; i++ )
 	{
-		cell_new( &self->cells[i] );
+		cell_init( &self->cells[i] );
 	}
 }
 

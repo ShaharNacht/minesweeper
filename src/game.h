@@ -16,7 +16,7 @@ typedef struct Game
 	SDL_Renderer *renderer;
 } Game;
 
-void game_new( Game *self, int board_cols, int board_rows );
+void game_init( Game *self, int board_cols, int board_rows );
 void game_destroy( Game *self );
 
 void game_main_loop( Game *self );

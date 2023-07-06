@@ -4,7 +4,7 @@
 int main()
 {
 	Game game;
-	game_new( &game, BOARD_COLS, BOARD_ROWS );
+	game_init( &game, BOARD_COLS, BOARD_ROWS );
 	
 	game_main_loop(&game);
 	
