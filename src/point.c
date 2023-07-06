@@ -1,4 +1,5 @@
 #include "consts.h"
+#include "utils.h"
 #include "board.h"
 #include "graphics.h"
 
@@ -39,8 +40,8 @@ BoardPoint window_point_to_board_point( WindowPoint self, const Board *board, co
 {
 	return (BoardPoint)
 	{
-		.x = self.x / window_cell_width( board, graphics ),
-		.y = self.y / window_cell_height( board, graphics )
+		.x = clamp( self.x / window_cell_width( board, graphics ), 0, board->cols - 1 ),
+		.y = clamp( self.y / window_cell_height( board, graphics ), 0, board->rows - 1 )
 	};
 }
 
