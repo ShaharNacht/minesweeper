@@ -1,6 +1,6 @@
 #pragma once
 
-typedef struct BoardPoint BoardPoint; // Fixes cyclic dependency
+typedef struct BoardPoint BoardPoint; // Prevent cyclic dependency
 
 #include "cell.h"
 #include "point.h"

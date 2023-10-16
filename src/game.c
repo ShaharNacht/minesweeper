@@ -23,7 +23,7 @@ void game_init( Game *self, int board_cols, int board_rows )
 	self->window = SDL_CreateWindow( "Minesweeper", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0 );
 	self->renderer = SDL_CreateRenderer( self->window, -1, 0 );
 	
-	srand( time(nullptr) );
+	srand( ( unsigned int ) time(nullptr) );
 	
 	board_init( &self->board, board_cols, board_rows );
 	graphics_init( &self->graphics, self->renderer, WINDOW_WIDTH, WINDOW_HEIGHT );

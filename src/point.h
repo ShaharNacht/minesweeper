@@ -1,6 +1,6 @@
 #pragma once
 
-typedef struct Board Board; // Fixes cyclic dependency
+typedef struct Board Board; // Prevent cyclic dependency
 
 #include "board.h"
 #include "graphics.h"

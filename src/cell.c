@@ -2,10 +2,12 @@
 
 #include "cell.h"
 
-void cell_init( Cell *self )
+void cell_init( Cell *self, bool is_mine, int mine_neighbor_count )
 {
-	self->is_revealed = ( rand() % 2 ) != 0;
-	self->is_mine = ( rand() % 2 ) != 0;
+	// self->is_revealed = ( rand() % 2 ) != 0;
+	self->is_revealed = true;
+	self->is_mine = is_mine;
+	self->mine_neighbor_count = mine_neighbor_count;
 }
 
 void cell_destroy( [[maybe_unused]] Cell *self )

@@ -1,7 +1,7 @@
 name := minesweeper
 src := src/*.c
 
-flags := -std=c2x -Wall -Wextra -lSDL2 -lSDL2_image
+flags := -std=c2x -Wall -Wextra -Wconversion -lSDL2 -lSDL2_image
 debug_flags := -ggdb3 -Og -D_FORTIFY_SOURCE=3 -fanalyzer
 release_flags := -flto -O3 -mwindows
 
