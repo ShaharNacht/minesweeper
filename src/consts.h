@@ -15,3 +15,5 @@ static constexpr int GFX_GRID_LINE_THICKNESS = 4;
 
 static const char * const GFX_CELL_TEXTURE_PATH = "assets/cell.png";
 static const char * const GFX_MINE_TEXTURE_PATH = "assets/mine.png";
+static const char * const GFX_NUMBERS_TEXTURE_PATH = "assets/numbers.png";
+static constexpr int GFX_NUMBERS_TEXTURE_NUMBER_COUNT = 9;

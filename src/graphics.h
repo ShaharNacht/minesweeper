@@ -13,6 +13,7 @@ typedef struct Graphics
 	// private
 	SDL_Texture *cell_texture;
 	SDL_Texture *mine_texture;
+	SDL_Texture *numbers_texture;
 } Graphics;
 
 void graphics_init( Graphics *self, SDL_Renderer *renderer, int window_width, int window_height );

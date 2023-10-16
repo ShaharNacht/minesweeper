@@ -4,8 +4,8 @@
 
 void cell_init( Cell *self, bool is_mine, int mine_neighbor_count )
 {
-	// self->is_revealed = ( rand() % 2 ) != 0;
-	self->is_revealed = true;
+	self->is_revealed = ( rand() % 2 ) != 0;
+	// self->is_revealed = true;
 	self->is_mine = is_mine;
 	self->mine_neighbor_count = mine_neighbor_count;
 }

@@ -19,6 +19,7 @@ void graphics_init( Graphics *self, SDL_Renderer *renderer, int window_width, in
 	
 	self->cell_texture = IMG_LoadTexture( renderer, GFX_CELL_TEXTURE_PATH );
 	self->mine_texture = IMG_LoadTexture( renderer, GFX_MINE_TEXTURE_PATH );
+	self->numbers_texture = IMG_LoadTexture( renderer, GFX_NUMBERS_TEXTURE_PATH );
 }
 
 void graphics_destroy( Graphics *self )
@@ -28,6 +29,9 @@ void graphics_destroy( Graphics *self )
 	
 	SDL_DestroyTexture(self->mine_texture);
 	self->mine_texture = nullptr;
+	
+	SDL_DestroyTexture(self->numbers_texture);
+	self->numbers_texture = nullptr;
 }
 
 void graphics_draw( const Graphics *self, SDL_Renderer *renderer, const Board *board )
@@ -79,30 +83,40 @@ static void draw_board( const Graphics *self, SDL_Renderer *renderer, const Boar
 		{
 			BoardPoint board_point = board_point_new( x, y );
 			Cell *cell = board_get_cell( board, board_point );
-			bool draw_cell = false;
-			SDL_Texture *texture = nullptr;
+			WindowPoint window_point = board_point_to_window_point( board_point, board, self );
+			int cell_width = window_cell_width( board, self );
+			int cell_height = window_cell_height( board, self );
 			
 			if (!cell->is_revealed)
 			{
-				draw_cell = true;
-				texture = self->cell_texture;
+				SDL_RenderCopy(
+					renderer,
+					self->cell_texture,
+					nullptr,
+					&(SDL_Rect) { window_point.x, window_point.y, cell_width, cell_height }
+				);
 			}
 			else if (cell->is_mine)
 			{
-				draw_cell = true;
-				texture = self->mine_texture;
+				SDL_RenderCopy(
+					renderer,
+					self->mine_texture,
+					nullptr,
+					&(SDL_Rect) { window_point.x, window_point.y, cell_width, cell_height }
+				);
 			}
-			
-			if (draw_cell)
+			else
 			{
-				WindowPoint window_point = board_point_to_window_point( board_point, board, self );
-				int cell_width = window_cell_width( board, self );
-				int cell_height = window_cell_height( board, self );
+				int numbers_texture_width;
+				int numbers_texture_height;
+				SDL_QueryTexture( self->numbers_texture, nullptr, nullptr, &numbers_texture_width, &numbers_texture_height );
+				int src_x = cell->mine_neighbor_count * numbers_texture_width / GFX_NUMBERS_TEXTURE_NUMBER_COUNT;
+				int src_width = numbers_texture_width / GFX_NUMBERS_TEXTURE_NUMBER_COUNT;
 				
 				SDL_RenderCopy(
 					renderer,
-					texture,
-					nullptr,
+					self->numbers_texture,
+					&(SDL_Rect) { src_x, 0, src_width, numbers_texture_height },
 					&(SDL_Rect) { window_point.x, window_point.y, cell_width, cell_height }
 				);
 			}
