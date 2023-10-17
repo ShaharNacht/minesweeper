@@ -4,6 +4,7 @@
 #include "include_sdl2.h"
 
 #include "consts.h"
+#include "point.h"
 #include "board.h"
 #include "graphics.h"
 
@@ -25,6 +26,8 @@ void game_init( Game *self, int board_cols, int board_rows )
 	
 	srand( ( unsigned int ) time(nullptr) );
 	
+	self->mouse = window_point_new( 0, 0 );
+	
 	board_init( &self->board, board_cols, board_rows );
 	graphics_init( &self->graphics, self->renderer, WINDOW_WIDTH, WINDOW_HEIGHT );
 }
@@ -33,6 +36,8 @@ void game_destroy( Game *self )
 {
 	graphics_destroy(&self->graphics);
 	board_destroy(&self->board);
+	
+	window_point_destroy(&self->mouse);
 	
 	SDL_DestroyRenderer(self->renderer);
 	self->renderer = nullptr;
@@ -77,6 +82,10 @@ static bool handle_events( Game *self )
 		{
 			case SDL_QUIT:
 				return false;
+			
+			case SDL_MOUSEMOTION:
+				self->mouse.x = event.motion.x;
+				self->mouse.y = event.motion.y;
 		}
 	}
 	
@@ -85,6 +94,8 @@ static bool handle_events( Game *self )
 
 static bool update( Game *self )
 {
+	SDL_Log( "mouse: %d, %d", self->mouse.x, self->mouse.y );
+	
 	return true;
 }
 

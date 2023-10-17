@@ -110,8 +110,8 @@ static void draw_board( const Graphics *self, SDL_Renderer *renderer, const Boar
 				int numbers_texture_width;
 				int numbers_texture_height;
 				SDL_QueryTexture( self->numbers_texture, nullptr, nullptr, &numbers_texture_width, &numbers_texture_height );
-				int src_x = cell->mine_neighbor_count * numbers_texture_width / GFX_NUMBERS_TEXTURE_NUMBER_COUNT;
-				int src_width = numbers_texture_width / GFX_NUMBERS_TEXTURE_NUMBER_COUNT;
+				int src_x = cell->mine_neighbor_count * numbers_texture_width / GFX_NUMBERS_TEXTURE_SUBTEXTURE_COUNT;
+				int src_width = numbers_texture_width / GFX_NUMBERS_TEXTURE_SUBTEXTURE_COUNT;
 				
 				SDL_RenderCopy(
 					renderer,

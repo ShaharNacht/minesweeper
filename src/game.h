@@ -2,6 +2,7 @@
 
 #include "include_sdl2.h"
 
+#include "point.h"
 #include "board.h"
 #include "graphics.h"
 
@@ -9,6 +10,7 @@ typedef struct Game
 {
 	// read-only
 	Board board;
+	WindowPoint mouse;
 	
 	// private
 	Graphics graphics;
