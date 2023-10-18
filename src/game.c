@@ -5,6 +5,7 @@
 
 #include "consts.h"
 #include "point.h"
+#include "ui.h"
 #include "board.h"
 #include "graphics.h"
 
@@ -21,23 +22,21 @@ void game_init( Game *self, int board_cols, int board_rows )
 	SDL_Init(SDL_INIT_VIDEO);
 	IMG_Init(IMG_INIT_PNG);
 	
-	self->window = SDL_CreateWindow( "Minesweeper", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0 );
+	self->window = SDL_CreateWindow( WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0 );
 	self->renderer = SDL_CreateRenderer( self->window, -1, 0 );
 	
 	srand( ( unsigned int ) time(nullptr) );
 	
-	self->mouse = window_point_new( 0, 0 );
-	
 	board_init( &self->board, board_cols, board_rows );
+	ui_init(&self->ui);
 	graphics_init( &self->graphics, self->renderer, WINDOW_WIDTH, WINDOW_HEIGHT );
 }
 
 void game_destroy( Game *self )
 {
 	graphics_destroy(&self->graphics);
+	ui_destroy(&self->ui);
 	board_destroy(&self->board);
-	
-	window_point_destroy(&self->mouse);
 	
 	SDL_DestroyRenderer(self->renderer);
 	self->renderer = nullptr;
@@ -84,36 +83,40 @@ static bool handle_events( Game *self )
 				return false;
 			
 			case SDL_MOUSEMOTION:
-				self->mouse.x = event.motion.x;
-				self->mouse.y = event.motion.y;
+			{
+				WindowPoint mouse_position = window_point_new( event.motion.x, event.motion.y );
+				ui_on_mouse_move( &self->ui, mouse_position );
+			}
 			break;
 			
 			case SDL_MOUSEBUTTONDOWN:
-				self->mouse.x = event.button.x;
-				self->mouse.y = event.button.y;
+			{
+				WindowPoint mouse_position = window_point_new( event.button.x, event.button.y );
 				
 				if ( event.button.button == SDL_BUTTON_LEFT )
 				{
-					SDL_Log("Left press");
+					ui_on_left_mouse_down( &self->ui, &self->board, mouse_position );
 				}
 				else if ( event.button.button == SDL_BUTTON_RIGHT )
 				{
-					SDL_Log("Right press");
+					ui_on_right_mouse_down( &self->ui, &self->board, mouse_position );
 				}
+			}
 			break;
 			
 			case SDL_MOUSEBUTTONUP:
-				self->mouse.x = event.button.x;
-				self->mouse.y = event.button.y;
+			{
+				WindowPoint mouse_position = window_point_new( event.button.x, event.button.y );
 				
 				if ( event.button.button == SDL_BUTTON_LEFT )
 				{
-					SDL_Log("Left release");
+					ui_on_left_mouse_up( &self->ui, &self->board, mouse_position );
 				}
 				else if ( event.button.button == SDL_BUTTON_RIGHT )
 				{
-					SDL_Log("Right release");
+					// Nothing interesting happens.
 				}
+			}
 			break;
 		}
 	}

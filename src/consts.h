@@ -5,6 +5,7 @@
 static constexpr int BOARD_COLS = 12;
 static constexpr int BOARD_ROWS = 12;
 
+static const char * const WINDOW_TITLE = "Minesweeper";
 static constexpr int WINDOW_WIDTH = 768;
 static constexpr int WINDOW_HEIGHT = 768;
 static constexpr int TARGET_FPS = 60;
