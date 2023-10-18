@@ -86,6 +86,35 @@ static bool handle_events( Game *self )
 			case SDL_MOUSEMOTION:
 				self->mouse.x = event.motion.x;
 				self->mouse.y = event.motion.y;
+			break;
+			
+			case SDL_MOUSEBUTTONDOWN:
+				self->mouse.x = event.button.x;
+				self->mouse.y = event.button.y;
+				
+				if ( event.button.button == SDL_BUTTON_LEFT )
+				{
+					SDL_Log("Left press");
+				}
+				else if ( event.button.button == SDL_BUTTON_RIGHT )
+				{
+					SDL_Log("Right press");
+				}
+			break;
+			
+			case SDL_MOUSEBUTTONUP:
+				self->mouse.x = event.button.x;
+				self->mouse.y = event.button.y;
+				
+				if ( event.button.button == SDL_BUTTON_LEFT )
+				{
+					SDL_Log("Left release");
+				}
+				else if ( event.button.button == SDL_BUTTON_RIGHT )
+				{
+					SDL_Log("Right release");
+				}
+			break;
 		}
 	}
 	
@@ -94,8 +123,6 @@ static bool handle_events( Game *self )
 
 static bool update( Game *self )
 {
-	SDL_Log( "mouse: %d, %d", self->mouse.x, self->mouse.y );
-	
 	return true;
 }
 
