@@ -85,7 +85,7 @@ static bool handle_events( Game *self )
 			case SDL_MOUSEMOTION:
 			{
 				WindowPoint mouse_position = window_point_new( event.motion.x, event.motion.y );
-				ui_on_mouse_move( &self->ui, mouse_position );
+				ui_on_mouse_move( &self->ui, &self->board, &self->graphics, mouse_position );
 			}
 			break;
 			
@@ -95,11 +95,11 @@ static bool handle_events( Game *self )
 				
 				if ( event.button.button == SDL_BUTTON_LEFT )
 				{
-					ui_on_left_mouse_down( &self->ui, &self->board, mouse_position );
+					ui_on_left_mouse_down( &self->ui, &self->board, &self->graphics, mouse_position );
 				}
 				else if ( event.button.button == SDL_BUTTON_RIGHT )
 				{
-					ui_on_right_mouse_down( &self->ui, &self->board, mouse_position );
+					ui_on_right_mouse_down( &self->ui, &self->board, &self->graphics, mouse_position );
 				}
 			}
 			break;
@@ -110,7 +110,7 @@ static bool handle_events( Game *self )
 				
 				if ( event.button.button == SDL_BUTTON_LEFT )
 				{
-					ui_on_left_mouse_up( &self->ui, &self->board, mouse_position );
+					ui_on_left_mouse_up( &self->ui, &self->board, &self->graphics, mouse_position );
 				}
 				else if ( event.button.button == SDL_BUTTON_RIGHT )
 				{
@@ -131,5 +131,5 @@ static bool update( Game *self )
 
 static void draw( const Game *self )
 {
-	graphics_draw( &self->graphics, self->renderer, &self->board );
+	graphics_draw( &self->graphics, self->renderer, &self->ui, &self->board );
 }

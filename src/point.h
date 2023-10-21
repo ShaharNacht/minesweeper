@@ -2,9 +2,6 @@
 
 typedef struct Board Board; // Prevent cyclic dependency
 
-#include "board.h"
-#include "graphics.h"
-
 typedef struct BoardPoint
 {
 	// public
@@ -18,6 +15,9 @@ typedef struct WindowPoint
 	int x;
 	int y;
 } WindowPoint;
+
+#include "board.h"
+#include "graphics.h"
 
 BoardPoint board_point_new( int x, int y );
 void board_point_destroy( BoardPoint *self );

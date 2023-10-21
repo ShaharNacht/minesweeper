@@ -3,14 +3,16 @@
 #include "include_sdl2.h"
 
 #include "consts.h"
+#include "ui.h"
 #include "board.h"
+#include "cell.h"
 #include "point.h"
 
 #include "graphics.h"
 
 static void set_color( SDL_Renderer *renderer, const uint8_t *rgb );
 static void draw_background( const Graphics *self, SDL_Renderer *renderer, const Board *board );
-static void draw_board( const Graphics *self, SDL_Renderer *renderer, const Board *board );
+static void draw_board( const Graphics *self, SDL_Renderer *renderer, const Ui *ui, const Board *board );
 
 void graphics_init( Graphics *self, SDL_Renderer *renderer, int window_width, int window_height )
 {
@@ -34,10 +36,10 @@ void graphics_destroy( Graphics *self )
 	self->numbers_texture = nullptr;
 }
 
-void graphics_draw( const Graphics *self, SDL_Renderer *renderer, const Board *board )
+void graphics_draw( const Graphics *self, SDL_Renderer *renderer, const Ui *ui, const Board *board )
 {
 	draw_background( self, renderer, board );
-	draw_board( self, renderer, board );
+	draw_board( self, renderer, ui, board );
 	
 	SDL_RenderPresent(renderer);
 }
@@ -75,7 +77,7 @@ static void draw_background( const Graphics *self, SDL_Renderer *renderer, const
 	}
 }
 
-static void draw_board( const Graphics *self, SDL_Renderer *renderer, const Board *board )
+static void draw_board( const Graphics *self, SDL_Renderer *renderer, const Ui *ui, const Board *board )
 {
 	for ( int y = 0; y < board->rows; y++ )
 	{
@@ -89,11 +91,24 @@ static void draw_board( const Graphics *self, SDL_Renderer *renderer, const Boar
 			
 			if (!cell->is_revealed)
 			{
-				SDL_RenderCopy(
+				SDL_RendererFlip flip;
+				if ( ui->selected_cell == cell && ui->is_mouse_on_selected_cell )
+				{
+					flip = SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL;
+				}
+				else
+				{
+					flip = SDL_FLIP_NONE;
+				}
+				
+				SDL_RenderCopyEx(
 					renderer,
 					self->cell_texture,
 					nullptr,
-					&(SDL_Rect) { window_point.x, window_point.y, cell_width, cell_height }
+					&(SDL_Rect) { window_point.x, window_point.y, cell_width, cell_height },
+					0.0,
+					nullptr,
+					flip
 				);
 			}
 			else if (cell->is_mine)

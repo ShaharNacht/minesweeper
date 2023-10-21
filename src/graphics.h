@@ -1,8 +1,8 @@
 #pragma once
 
-#include "include_sdl2.h"
+typedef struct Ui Ui; // Prevent cyclic dependency
 
-#include "board.h"
+#include "include_sdl2.h"
 
 typedef struct Graphics
 {
@@ -16,7 +16,10 @@ typedef struct Graphics
 	SDL_Texture *numbers_texture;
 } Graphics;
 
+#include "ui.h"
+#include "board.h"
+
 void graphics_init( Graphics *self, SDL_Renderer *renderer, int window_width, int window_height );
 void graphics_destroy( Graphics *self );
 
-void graphics_draw( const Graphics *self, SDL_Renderer *renderer, const Board *board );
+void graphics_draw( const Graphics *self, SDL_Renderer *renderer, const Ui *ui, const Board *board );
