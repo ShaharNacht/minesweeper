@@ -1,6 +1,8 @@
 #include <stdlib.h>
 
-#include "cell.h"
+#include "cell_type.h"
+
+#include "cell_methods.h"
 
 void cell_init( Cell *self, bool is_mine, int mine_neighbor_count )
 {

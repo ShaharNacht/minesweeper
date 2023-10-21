@@ -1,18 +1,10 @@
 #pragma once
 
-#include "point.h"
-#include "cell.h"
+#include "ui_type.h"
 
-typedef struct Ui
-{
-	// read-only
-	WindowPoint mouse_position;
-	Cell *selected_cell; // Just a reference, no need to destroy.
-	bool is_mouse_on_selected_cell;
-} Ui;
-
-#include "graphics.h"
-#include "board.h"
+#include "point_type.h"
+#include "graphics_type.h"
+#include "board_type.h"
 
 void ui_init( Ui *self );
 void ui_destroy( Ui *self );

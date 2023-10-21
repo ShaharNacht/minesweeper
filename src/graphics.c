@@ -3,12 +3,16 @@
 #include "include_sdl2.h"
 
 #include "consts.h"
-#include "ui.h"
-#include "board.h"
-#include "cell.h"
-#include "point.h"
 
-#include "graphics.h"
+#include "graphics_type.h"
+#include "ui_type.h"
+#include "point_type.h"
+#include "board_type.h"
+#include "cell_type.h"
+
+#include "graphics_methods.h"
+#include "point_methods.h"
+#include "board_methods.h"
 
 static void set_color( SDL_Renderer *renderer, const uint8_t *rgb );
 static void draw_background( const Graphics *self, SDL_Renderer *renderer, const Board *board );

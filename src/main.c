@@ -1,5 +1,6 @@
 #include "consts.h"
-#include "game.h"
+#include "game_type.h"
+#include "game_methods.h"
 
 int main()
 {

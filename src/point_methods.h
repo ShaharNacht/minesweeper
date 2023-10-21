@@ -1,23 +1,9 @@
 #pragma once
 
-typedef struct Board Board; // Prevent cyclic dependency
+#include "point_type.h"
 
-typedef struct BoardPoint
-{
-	// public
-	int x;
-	int y;
-} BoardPoint;
-
-typedef struct WindowPoint
-{
-	// public
-	int x;
-	int y;
-} WindowPoint;
-
-#include "board.h"
-#include "graphics.h"
+#include "graphics_type.h"
+#include "board_type.h"
 
 BoardPoint board_point_new( int x, int y );
 void board_point_destroy( BoardPoint *self );

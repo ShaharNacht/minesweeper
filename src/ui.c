@@ -1,9 +1,11 @@
-#include "point.h"
-#include "graphics.h"
-#include "board.h"
-#include "cell.h"
+#include "ui_type.h"
+#include "graphics_type.h"
+#include "board_type.h"
+#include "cell_type.h"
 
-#include "ui.h"
+#include "ui_methods.h"
+#include "point_methods.h"
+#include "board_methods.h"
 
 static bool is_point_inside_window( const Graphics *graphics, WindowPoint point );
 

@@ -1,9 +1,11 @@
 #include "consts.h"
 #include "utils.h"
-#include "board.h"
-#include "graphics.h"
 
-#include "point.h"
+#include "point_type.h"
+#include "graphics_type.h"
+#include "board_type.h"
+
+#include "point_methods.h"
 
 BoardPoint board_point_new( int x, int y )
 {

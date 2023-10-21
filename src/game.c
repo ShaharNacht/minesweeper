@@ -4,12 +4,15 @@
 #include "include_sdl2.h"
 
 #include "consts.h"
-#include "point.h"
-#include "ui.h"
-#include "board.h"
-#include "graphics.h"
 
-#include "game.h"
+#include "game_type.h"
+#include "point_type.h"
+
+#include "game_methods.h"
+#include "point_methods.h"
+#include "ui_methods.h"
+#include "graphics_methods.h"
+#include "board_methods.h"
 
 static bool handle_events( Game *self );
 static bool update( Game *self );

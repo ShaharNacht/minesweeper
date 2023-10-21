@@ -1,10 +1,12 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include "cell.h"
-#include "point.h"
+#include "board_type.h"
+#include "cell_type.h"
+#include "point_type.h"
 
-#include "board.h"
+#include "board_methods.h"
+#include "cell_methods.h"
 
 void board_init( Board *self, int cols, int rows )
 {
