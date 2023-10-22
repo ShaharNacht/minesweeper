@@ -1,11 +1,11 @@
-#include "consts.h"
 #include "utils.h"
 
 #include "point_type.h"
-#include "graphics_type.h"
+#include "ui_type.h"
 #include "board_type.h"
 
 #include "point_methods.h"
+#include "ui_methods.h"
 
 BoardPoint board_point_new( int x, int y )
 {
@@ -29,30 +29,20 @@ void window_point_destroy( [[maybe_unused]] WindowPoint *self )
 	// in case code will be added to it in the future.
 }
 
-WindowPoint board_point_to_window_point( BoardPoint self, const Board *board, const Graphics *graphics )
+WindowPoint board_point_to_window_point( BoardPoint self, const Ui *ui, const Board *board )
 {
 	return (WindowPoint)
 	{
-		.x = self.x * window_cell_width( board, graphics ),
-		.y = self.y * window_cell_height( board, graphics )
+		.x = self.x * ui_get_cell_width( ui, board ),
+		.y = self.y * ui_get_cell_height( ui, board )
 	};
 }
 
-BoardPoint window_point_to_board_point( WindowPoint self, const Board *board, const Graphics *graphics )
+BoardPoint window_point_to_board_point( WindowPoint self, const Ui *ui, const Board *board )
 {
 	return (BoardPoint)
 	{
-		.x = clamp( self.x / window_cell_width( board, graphics ), 0, board->cols - 1 ),
-		.y = clamp( self.y / window_cell_height( board, graphics ), 0, board->rows - 1 )
+		.x = clamp( self.x / ui_get_cell_width( ui, board ), 0, board->cols - 1 ),
+		.y = clamp( self.y / ui_get_cell_height( ui, board ), 0, board->rows - 1 )
 	};
-}
-
-int window_cell_width( const Board *board, const Graphics *graphics )
-{
-	return graphics->window_width / board->cols;
-}
-
-int window_cell_height( const Board *board, const Graphics *graphics )
-{
-	return graphics->window_height / board->rows;
 }

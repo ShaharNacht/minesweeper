@@ -31,8 +31,8 @@ void game_init( Game *self, int board_cols, int board_rows )
 	srand( ( unsigned int ) time(nullptr) );
 	
 	board_init( &self->board, board_cols, board_rows );
-	ui_init(&self->ui);
-	graphics_init( &self->graphics, self->renderer, WINDOW_WIDTH, WINDOW_HEIGHT );
+	ui_init( &self->ui, WINDOW_WIDTH, WINDOW_HEIGHT );
+	graphics_init( &self->graphics, self->renderer );
 }
 
 void game_destroy( Game *self )
@@ -88,7 +88,7 @@ static bool handle_events( Game *self )
 			case SDL_MOUSEMOTION:
 			{
 				WindowPoint mouse_position = window_point_new( event.motion.x, event.motion.y );
-				ui_on_mouse_move( &self->ui, &self->board, &self->graphics, mouse_position );
+				ui_on_mouse_move( &self->ui, &self->board, mouse_position );
 			}
 			break;
 			
@@ -98,11 +98,11 @@ static bool handle_events( Game *self )
 				
 				if ( event.button.button == SDL_BUTTON_LEFT )
 				{
-					ui_on_left_mouse_down( &self->ui, &self->board, &self->graphics, mouse_position );
+					ui_on_left_mouse_down( &self->ui, &self->board, mouse_position );
 				}
 				else if ( event.button.button == SDL_BUTTON_RIGHT )
 				{
-					ui_on_right_mouse_down( &self->ui, &self->board, &self->graphics, mouse_position );
+					ui_on_right_mouse_down( &self->ui, &self->board, mouse_position );
 				}
 			}
 			break;
@@ -113,7 +113,7 @@ static bool handle_events( Game *self )
 				
 				if ( event.button.button == SDL_BUTTON_LEFT )
 				{
-					ui_on_left_mouse_up( &self->ui, &self->board, &self->graphics, mouse_position );
+					ui_on_left_mouse_up( &self->ui, &self->board, mouse_position );
 				}
 				else if ( event.button.button == SDL_BUTTON_RIGHT )
 				{
