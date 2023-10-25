@@ -67,7 +67,7 @@ void ui_on_left_mouse_down( Ui *self, const Board *board, WindowPoint mouse_posi
 	}
 }
 
-void ui_on_left_mouse_up( Ui *self, const Board *board, WindowPoint mouse_position )
+void ui_on_left_mouse_up( Ui *self, Board *board, WindowPoint mouse_position )
 {
 	ui_on_mouse_move( self, board, mouse_position );
 	
@@ -75,7 +75,7 @@ void ui_on_left_mouse_up( Ui *self, const Board *board, WindowPoint mouse_positi
 	{
 		if (self->is_mouse_on_selected_cell)
 		{
-			self->selected_cell->is_revealed = true;
+			board_reveal_cell( board, self->selected_cell );
 		}
 		
 		self->selected_cell = nullptr;

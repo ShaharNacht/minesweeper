@@ -4,6 +4,7 @@
 
 static constexpr int BOARD_COLS = 12;
 static constexpr int BOARD_ROWS = 12;
+static constexpr int MINE_COUNT = 22;
 
 static const char * const WINDOW_TITLE = "Minesweeper";
 static constexpr int WINDOW_WIDTH = 768;

@@ -5,7 +5,7 @@
 int main()
 {
 	Game game;
-	game_init( &game, BOARD_COLS, BOARD_ROWS );
+	game_init( &game, BOARD_COLS, BOARD_ROWS, MINE_COUNT );
 	
 	game_main_loop(&game);
 	

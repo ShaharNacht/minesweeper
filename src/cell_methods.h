@@ -2,7 +2,9 @@
 
 #include "cell_type.h"
 
-void cell_init( Cell *self, bool is_mine, int mine_neighbor_count );
+#include "point_type.h"
+
+void cell_init( Cell *self, BoardPoint position );
 void cell_destroy( Cell *self );
 
-void cell_set_mine( Cell *self, bool is_mine );
+void cell_generate( Cell *self, bool is_mine, int mine_neighbor_count );
