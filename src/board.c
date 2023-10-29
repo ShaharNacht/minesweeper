@@ -13,6 +13,7 @@
 #include "cell_methods.h"
 
 static void generate( Board *self, BoardPoint reveal_position );
+static void flood_reveal( Board *self, BoardPoint reveal_position );
 
 void board_init( Board *self, int cols, int rows, int mine_count )
 {
@@ -58,6 +59,11 @@ void board_reveal_cell( Board *self, Cell *cell )
 	}
 	
 	cell->is_revealed = true;
+	
+	if ( cell->mine_neighbor_count == 0 && !cell->is_mine )
+	{
+		flood_reveal( self, cell->position );
+	}
 }
 
 static void generate( Board *self, BoardPoint reveal_position )
@@ -101,7 +107,7 @@ static void generate( Board *self, BoardPoint reveal_position )
 		{
 			for ( int x = mine_position.x - 1; x <= mine_position.x + 1; x++ )
 			{
-				if ( x >= 0 && x < self->cols && y >= 0 && y <self->rows )
+				if ( x >= 0 && x < self->cols && y >= 0 && y < self->rows )
 				{
 					mine_neighbor_counts[ y * self->cols + x ]++;
 				}
@@ -122,4 +128,39 @@ static void generate( Board *self, BoardPoint reveal_position )
 	possible_mine_positions = nullptr;
 	
 	self->is_generated = true;
+}
+
+static void flood_reveal( Board *self, BoardPoint reveal_position )
+{
+	Cell *cell = board_get_cell( self, reveal_position );
+	
+	if ( cell->mine_neighbor_count == 0 && !cell->is_mine )
+	{
+		for ( int dy = -1; dy <= 1; dy++ )
+		{
+			for ( int dx = -1; dx <= 1; dx++ )
+			{
+				if (
+					!( dx == 0 && dy == 0 ) &&
+					reveal_position.x + dx >= 0 &&
+					reveal_position.x + dx < self->cols &&
+					reveal_position.y + dy >= 0 &&
+					reveal_position.y + dy < self->rows
+				)
+				{
+					Cell *neighbor = board_get_cell( self, board_point_new( reveal_position.x + dx, reveal_position.y + dy ) );
+					
+					if ( !neighbor->is_revealed )
+					{
+						neighbor->is_revealed = true;
+						
+						if ( neighbor->mine_neighbor_count == 0 && !neighbor->is_mine )
+						{
+							flood_reveal( self, neighbor->position );
+						}
+					}
+				}
+			}
+		}
+	}
 }
